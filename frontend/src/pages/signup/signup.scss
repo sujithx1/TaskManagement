@@ -1,0 +1,86 @@
+// // src/components/Signup/signup.scss
+
+// $primary: #ffffff;
+// $accent: #007BFF;
+// $bg: #f5f7fa;
+// $error: #ff4d4f;
+// $border: rgba(0, 0, 0, 0.1);
+
+// .signup-container {
+//   min-height: 100vh;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background: $bg;
+//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//   padding: 2rem;  
+
+//   .signup-form {
+//     background: white;
+//     padding: 3rem;
+//     border-radius: 20px;
+//     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+//     width: 100%;
+//     max-width: 400px;
+
+//     h2 {
+//       color: #333;
+//       text-align: center;
+//       margin-bottom: 1.5rem;
+//       font-size: 1.8rem;
+//     }
+
+//     .form-group {
+//       margin-bottom: 1.5rem;
+
+//       label {
+//         display: block;
+//         color: #555;
+//         margin-bottom: 0.5rem;
+//       }
+
+//       input {
+//         width: 100%;
+//         padding: 0.75rem 1rem;
+//         border: 1px solid $border;
+//         border-radius: 10px;
+//         background: #fff;
+//         color: #333;
+//         font-size: 1rem;
+//         transition: 0.3s;
+
+//         &:focus {
+//           border-color: $accent;
+//           outline: none;
+//           box-shadow: 0 0 5px lighten($accent, 20%);
+//         }
+//       }
+
+//       .error {
+//         display: block;
+//         color: $error;
+//         font-size: 0.9rem;
+//         margin-top: 0.25rem;
+//       }
+//     }
+
+//     button {
+//       width: 100%;
+//       padding: 0.75rem;
+//       background: $accent;
+//       color: white;
+//       font-weight: bold;
+//       border: none;
+//       border-radius: 12px;
+//       cursor: pointer;
+//       font-size: 1rem;
+//       transition: all 0.3s ease;
+
+//       &:hover {
+//         background: darken($accent, 10%);
+//         box-shadow: 0 0 10px lighten($accent, 20%);
+//       }
+//     }
+//   }
+// }
+          

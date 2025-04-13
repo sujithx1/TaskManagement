@@ -1,0 +1,22 @@
+.sidebar-link {
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #f1f5f9;
+      color: #0d6efd !important;
+    }
+  }
+  
+  .nav-link.active {
+    background-color: #eaf2ff !important;
+    font-weight: 500;
+    border-left: 4px solid #0d6efd;
+  }
+  .sidebar-link.active {
+    background-color: #f0f0f0;
+    border-radius: 6px;
+  }
+  

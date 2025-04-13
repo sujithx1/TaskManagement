@@ -1,0 +1,11 @@
+@use 'sass:color';
+
+// Recreate the old lighten function
+@function lighten($color, $amount) {
+  @return color.adjust($color, $lightness: $amount);
+}
+
+// Recreate the old darken function
+@function darken($color, $amount) {
+  @return color.adjust($color, $lightness: -$amount);
+}

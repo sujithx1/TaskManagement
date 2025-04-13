@@ -1,0 +1,51 @@
+.notfound-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #f4f6f8;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .notfound-card {
+    text-align: center;
+    background: #fff;
+    padding: 3rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    max-width: 500px;
+    width: 100%;
+  
+    h1 {
+      font-size: 6rem;
+      font-weight: 700;
+      color: #8e44ad;
+    }
+  
+    .subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+  
+    .description {
+      color: #888;
+      margin-bottom: 2rem;
+    }
+  
+    .home-btn {
+      background: #3498db;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: background 0.2s ease;
+  
+      &:hover {
+        background: #2c80b4;
+      }
+    }
+  }
+       

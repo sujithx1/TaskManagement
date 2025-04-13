@@ -1,0 +1,80 @@
+// $bg: #f4f6fc;
+// $primary: #1e1e2f;
+// $card-bg: #ffffff;
+// $accent: #4e77f9;
+// $text: #333;
+// $shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+// .home-container {
+//   background-color: $bg;
+//   min-height: 100vh;
+//   padding: 3rem;
+//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//   color: $text;
+
+//   .header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 2rem;
+
+//     h1 {
+//       font-size: 2rem;
+//       font-weight: 600;
+//       color: $primary;
+//     }
+
+//     button {
+//       background-color: $accent;
+//       color: #fff;
+//       border: none;
+//       padding: 0.7rem 1.2rem;
+//       font-size: 1rem;
+//       border-radius: 10px;
+//       cursor: pointer;
+//       box-shadow: $shadow;
+//       transition: background 0.3s ease;
+
+//       &:hover {
+//         background-color: darken($accent, 5%);
+//       }
+//     }
+//   }
+
+//   .task-grid {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+//     gap: 1.5rem;
+
+//     .task-card {
+//       background-color: $card-bg;
+//       padding: 1.5rem;
+//       border-radius: 15px;
+//       box-shadow: $shadow;
+//       transition: transform 0.3s ease;
+
+//       &:hover {
+//         transform: translateY(-5px);
+//       }
+
+//       h3 {
+//         font-size: 1.2rem;
+//         margin-bottom: 0.5rem;
+//         color: $primary;
+//       }
+
+//       p {
+//         font-size: 0.95rem;
+//         line-height: 1.4;
+//         color: darken($text, 10%);
+//       }
+
+//       .due {
+//         margin-top: 1rem;
+//         font-size: 0.85rem;
+//         color: $accent;
+//         font-weight: 500;
+//       }
+//     }
+//   }
+// }
