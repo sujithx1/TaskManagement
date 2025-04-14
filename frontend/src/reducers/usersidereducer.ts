@@ -27,6 +27,19 @@ const userslice=createSlice({
             state.isAuthenticated = false;
             localStorage.removeItem('user'); 
           },
+          addTask_user:(state,action)=>{
+            const newTask=action.payload
+            state.tasks.push(newTask)
+
+          },
+          removeTask:(state,action)=>{
+            const index=state.tasks.findIndex((item)=>item.id==action.payload)
+            if(index!==-1){
+              state.tasks.splice(index,1)
+            }
+
+
+          },
 
     }
     ,extraReducers(builder) {
@@ -42,5 +55,5 @@ const userslice=createSlice({
 
 
 
-export const {loginSuccess,logout}=userslice.actions
+export const {loginSuccess,logout,addTask_user,removeTask}=userslice.actions
 export default userslice.reducer

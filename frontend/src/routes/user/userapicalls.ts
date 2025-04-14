@@ -32,7 +32,16 @@ export const loginUser = createAsyncThunk<UserStateTypes,UserLogin_types,{reject
     async (formData, { rejectWithValue }) => {
       try {
         const response = await userapi.post('/login', formData); // Adjust the endpoint
+
+        if(response.data.user.isAdmin){
+          localStorage.setItem('admin-token',response.data.token)
+
+        }else{
+          localStorage.setItem('user-token',response.data.token)
+
+        }
         return response.data.user;
+
       } catch (error) {
         if (isAxiosError(error)) {
             return rejectWithValue({

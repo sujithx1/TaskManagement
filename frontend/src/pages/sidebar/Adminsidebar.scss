@@ -76,4 +76,29 @@
       }
     }
   }
+  .upload-section {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  
+    .upload-btn {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      background-color: #2980b9;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+  
+      &.upload-confirm {
+        background-color: #27ae60;
+      }
+  
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
   

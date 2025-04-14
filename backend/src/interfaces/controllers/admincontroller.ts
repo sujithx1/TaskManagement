@@ -5,6 +5,7 @@ import { EditTasks_useCase } from "../../application/use-cases/adminside/edittas
 import { GetAllTasks_useCase } from "../../application/use-cases/adminside/getalltasks";
 import { AppError } from "../../configs/apperror";
 import { ErrorCodes } from "../../configs/errorcodes";
+import { RemoveUserTask_useCase } from "../../application/use-cases/adminside/removetaskremoveuser";
 
 
 
@@ -13,7 +14,8 @@ export class Admincontroller{
         private getusers:Getusers_useCase,
         private createTask:CreateTask_useCase,
         private getTasks:GetAllTasks_useCase,
-        private updateTask:EditTasks_useCase
+        private updateTask:EditTasks_useCase,
+        private taskremoveuser:RemoveUserTask_useCase
         
     ) {
         
@@ -99,6 +101,24 @@ export class Admincontroller{
                 assignedTo,
                 checklist,
                 })
+          res.status(200).json({success:true, message: "User created", task });
+        } catch (err) {
+          return next(err)
+        }
+      };
+      async _removeTaskuser (req: Request, res: Response,next:NextFunction){   
+        try {
+            const { userId
+                }=req.body 
+                
+                
+                if(!userId
+                    )
+                return next(new AppError(ErrorCodes.ValidationError,404))
+                const {id}=req.params
+                if(!id) return next(new AppError(ErrorCodes.Id_Missing,404))
+
+            const task=await this.taskremoveuser.execute(id,userId)
           res.status(200).json({success:true, message: "User created", task });
         } catch (err) {
           return next(err)

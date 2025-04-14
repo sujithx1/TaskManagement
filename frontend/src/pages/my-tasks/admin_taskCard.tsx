@@ -3,17 +3,19 @@ import {  Tasks_Statetypes } from '../../types/adminside';
 import { UserStateTypes } from '../../types/userside';
 import { AppDispatch,  } from '../../store/store';
 import { useDispatch,  } from 'react-redux';
-import { EditTaks,  } from '../../routes/admin/adminapicalls';
-import { setTask } from '../../reducers/adminsidereducer';
+import { EditTaks, removeTaskfromUser,  } from '../../routes/admin/adminapicalls';
+import {  removeUserfromTask, setTask } from '../../reducers/adminsidereducer';
+import { socket } from '../../configs/socket';
 
 interface TaskCardProps {
   task: Tasks_Statetypes;
 allUsers: UserStateTypes[]; // Assuming you have a list of all users to assign
   onUpdate?: (updatedTask: Partial<Tasks_Statetypes>) => void;
   onTaskUpdate?: (task: Tasks_Statetypes) => void;
+  removeTask?:(taskId:string)=>void
 }
 
-const Admin_TaskCard: React.FC<TaskCardProps> = ({ task, allUsers ,onTaskUpdate}) => {
+const Admin_TaskCard: React.FC<TaskCardProps> = ({ task, allUsers ,onTaskUpdate,removeTask}) => {
   const [isEditing, setIsEditing] = useState(false);
 // const {tasks}=useSelector((state:RootState)=>state.admin)
   // Editable fields
@@ -43,7 +45,7 @@ const Admin_TaskCard: React.FC<TaskCardProps> = ({ task, allUsers ,onTaskUpdate}
   };
 
   // List of remaining users (those who are not already assigned to the task)
-  const remainingUsers = allUsers.filter(user => !assignedUsers.some(assigned => typeof assigned.userId === 'object' && assigned.userId !== null && '_id' in assigned.userId 
+  const remainingUsers = allUsers.filter(user => !assignedUsers.some(assigned => typeof assigned.userId === 'object' && assigned.userId !== null && 'id' in assigned.userId 
     ? assigned.userId._id === user._id:true));
 
   const handleAssignUser = () => {
@@ -56,19 +58,37 @@ const Admin_TaskCard: React.FC<TaskCardProps> = ({ task, allUsers ,onTaskUpdate}
     }
   };
 
-  const handleRemoveAssignedUser = (userId: string) => {
+  const handleRemoveAssignedUser = (userId: string,taskId:string) => {
     setAssignedUsers(assignedUsers.filter(user => 
       typeof user.userId === 'object' && user.userId !== null && '_id' in user.userId 
         ? user.userId._id !== userId 
         : true
     ));
+    console.log(userId,taskId);
     
+    
+    dispatch(removeTaskfromUser({userId,taskId})).unwrap()
+    .then((res)=>{
+      socket.emit('remove-user',{userId,taskId})
+      if (res==null) {
+        console.log("user is zzzeroooo");
+        removeTask?.(taskId)
+        
+        
+      }else{
+        dispatch(removeUserfromTask({taskId,userId}))
+
+      }   
+
+
+
+    })
   };
 
   const handleSave = () => {
     setIsEditing(false);
     const data:Tasks_Statetypes={
-      id: task._id,
+      id: task.id,
       title: editedTitle,
       description: editedDescription,
       dueDate: new Date(editedDueDate),
@@ -172,7 +192,10 @@ const Admin_TaskCard: React.FC<TaskCardProps> = ({ task, allUsers ,onTaskUpdate}
                : 'Unknown User'
                 
                 } - <span className="text-capitalize">{assignee.status}</span>
-                <button className="btn btn-sm btn-danger ms-2" onClick={() => handleRemoveAssignedUser(typeof assignee.userId === 'string' ? assignee.userId : assignee.userId._id||"")}>Remove</button>
+                {task.status==="Pending"&&
+
+                <button className="btn btn-sm btn-danger ms-2" onClick={() => handleRemoveAssignedUser(typeof assignee.userId === 'string' ? assignee.userId : assignee.userId._id||"",task.id||"")}>Remove</button>
+                }
               </li>
             ))}
           </ul>

@@ -1,7 +1,8 @@
 import express from "express"
 import { usercontroller } from "../dependency injection/user_di"
 import { createAccesstoken } from "../../configs/jwt";
-import { authenticateAccessToken, authorizeRoles } from "../middlewares/jwtauthentication";
+import {authenticateAccessToken } from "../middlewares/jwtauthentication";
+// import { authenticateAccessToken, authorizeRoles } from "../middlewares/jwtauthentication";
 const router=express.Router()
 
 
@@ -22,12 +23,16 @@ router.post('/logout/:id',(req,res,next)=>{
     
     usercontroller.logout(req,res,next)
 })
-router.get('/tasks/:id',(req,res,next)=>{
+router.get('/tasks/:id',
+    authenticateAccessToken,
+    (req,res,next)=>{
 
     
     usercontroller._getTasksbyUserId(req,res,next)
 })
-router.patch('/tasks/:taskId/update-status',(req,res,next)=>{
+router.patch('/tasks/:taskId/update-status',
+    authenticateAccessToken,
+    (req,res,next)=>{
 
     
     usercontroller._patchTaskComplete(req,res,next)

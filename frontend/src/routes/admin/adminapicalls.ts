@@ -94,3 +94,28 @@ export const getAllTask = createAsyncThunk<Tasks_Statetypes[],void,{rejectValue:
     }
   );
   
+
+  
+export const removeTaskfromUser = createAsyncThunk<Tasks_Statetypes,{userId:string,taskId:string},{rejectValue:ErrorPayload}>(
+  'admin/removeTask',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await adminapi.patch(`/task-remove-userid/${data.taskId}`,data); // Adjust the endpoint
+      console.log(response.data.task);
+      
+      return response.data.task;
+    } catch (error) {
+      if (isAxiosError(error)) {
+          return rejectWithValue({
+            message:error.response?.data.error
+            ,status:error.response?.status
+          })
+    
+          
+        }
+        return rejectWithValue({
+          message:"something wrong"
+        })
+    }
+  }
+);

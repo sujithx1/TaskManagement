@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './create_tasks.scss';
 import AdminSidebar from '../sidebar/AdminsideBar';
-import { Alert, UserStateTypes } from '../../types/userside';
+import { Alert, TaskNoty, UserStateTypes } from '../../types/userside';
 import { AppDispatch } from '../../store/store';
 import { useDispatch } from 'react-redux';
 import { createTasks, getAllusers } from '../../routes/admin/adminapicalls';
@@ -9,6 +9,7 @@ import { TaskInput } from '../../types/adminside';
 import Notification from '../../components/notifications/Notification';
 import { add_Tasks } from '../../reducers/adminsidereducer';
 import { useNavigate } from 'react-router-dom';
+import { socket } from '../../configs/socket';
 
 const CreateTaskForm: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,12 +25,27 @@ const CreateTaskForm: React.FC = () => {
   // const [newAttachment, setNewAttachment] = useState('');
   const [showUserList, setShowUserList] = useState(false);
   const [users, setUsers] = useState<UserStateTypes[]>([]);
+  // Add this state
+const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
+
    const [alert,setAlert]=useState<Alert>({
       action:false,
       message:'',
       type:"idel",
      })
      const navigate=useNavigate()
+     const validateForm = () => {
+      const errors: { [key: string]: string } = {};
+    
+      if (!taskTitle.trim()) errors.taskTitle = "Task title is required.";
+      if (!description.trim()) errors.description = "Description is required.";
+      if (!dueDate) errors.dueDate = "Due date is required.";
+      if (members.length === 0) errors.members = "Assign at least one member.";
+    
+      setValidationErrors(errors);
+      return Object.keys(errors).length === 0;
+    };
+    
   useEffect(() => {
     dispatch(getAllusers())
       .unwrap()
@@ -52,6 +68,8 @@ const CreateTaskForm: React.FC = () => {
 
 
     const handleSubmit = () => {
+      if (!validateForm()) return;
+
         const data:TaskInput={
             title: taskTitle,
             assignedTo:members,
@@ -66,7 +84,14 @@ const CreateTaskForm: React.FC = () => {
 
 
     dispatch(createTasks(data)).unwrap()
+
     .then((res)=>{
+      const taskNoty:TaskNoty={
+        assignUser:members,
+        task:res
+      }
+
+      socket.emit('task-created',taskNoty)
         dispatch(add_Tasks(res))
         setAlert({
             action:true,
@@ -105,6 +130,8 @@ const CreateTaskForm: React.FC = () => {
           value={taskTitle}
           onChange={(e) => setTaskTitle(e.target.value)}
         />
+        {validationErrors.taskTitle && <p className="error-text">{validationErrors.taskTitle}</p>}
+
 
         {/* Description */}
         <label>Description</label>
@@ -113,6 +140,8 @@ const CreateTaskForm: React.FC = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           />
+          {validationErrors.description && <p className="error-text">{validationErrors.description}</p>}
+
 
         {/* Priority and Due Date */}
         <div className="row">
@@ -124,6 +153,10 @@ const CreateTaskForm: React.FC = () => {
               <option>High</option>
             </select>
           </div>
+          {validationErrors.priority && <p className="error-text">{validationErrors.priority}</p>}
+
+          
+
 
           <div className="col">
             <label>Due Date</label>
@@ -133,6 +166,8 @@ const CreateTaskForm: React.FC = () => {
               onChange={(e) => setDueDate(e.target.value)}
             />
           </div>
+          {validationErrors.dueDate && <p className="error-text">{validationErrors.dueDate}</p>}
+
 
           {/* Assign Members */}
           <div className="col">
@@ -144,6 +179,7 @@ const CreateTaskForm: React.FC = () => {
             >
               👥 Add Members
             </button>
+
 
             {showUserList && (
               <div className="user-list mt-3 card p-3 shadow-sm rounded">
@@ -174,6 +210,8 @@ const CreateTaskForm: React.FC = () => {
                 </div>
               </div>
             )}
+            {validationErrors.members && <p className="error-text">{validationErrors.members}</p>}
+
           </div>
         </div>
 

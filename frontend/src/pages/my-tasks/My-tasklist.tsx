@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from '../sidebar/Sidebar';
 import { useParams } from 'react-router-dom';
-import { AppDispatch } from '../../store/store';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { getTasks } from '../../routes/user/userapicalls';
-import { Tasks_Statetypes } from '../../types/adminside';
 import UserTaskCard from './My-tasks';
 // import TaskCard from './';
 
@@ -13,15 +12,13 @@ const TaskList: React.FC = () => {
     console.log("id",id);
     
     const dispatch:AppDispatch=useDispatch()
-    const [tasks,setTasks]=useState<Tasks_Statetypes[]>([])
+    // const [tasks,setTasks]=useState<Tasks_Statetypes[]>([])
+     const {tasks}=useSelector((state:RootState)=>state.user)
     useEffect(()=>{
         if(id)
         {
             dispatch(getTasks(id)).unwrap()
-            .then((res)=>{
-                setTasks(res)
 
-            })
         }
     },[dispatch,id])
 

@@ -60,4 +60,18 @@ export class Taskmongorepositories implements ItaskRepositories {
     }
     return returnTaskEntity(updateTask);
   }
+
+
+
+
+
+  // removeTaskusers(taskId: string, userId: string): Promise<TaskEntity | null> {
+  //     const task=await TaskModel.findOneAndUpdate({_id:taskId},{
+        
+  //     })
+  // }
+ async  findTaskandDelete(taskId: string): Promise<void> {
+      await TaskModel.findOneAndDelete({_id:taskId})
+     
+ }
 }

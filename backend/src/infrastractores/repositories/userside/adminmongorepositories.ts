@@ -5,6 +5,7 @@ import { TaskModel } from "../../database/taskmodel";
 import { userModel } from "../../database/usermodel";
 import { returnTaskEntity } from "./taskmongorep";
 
+
 export class AdminSideRepository implements IAdminRepositories {
   async getAllUsers(): Promise<userEntity[]> {
     return userModel.find({isAdmin:false});
@@ -30,13 +31,15 @@ export class AdminSideRepository implements IAdminRepositories {
   }
 
   async getAllTasks(): Promise<TaskEntity[]> {
-    return TaskModel.find().populate("assignedTo.userId");
+    const tasks=await TaskModel.find().populate("assignedTo.userId")
+    return tasks.map((item)=>returnTaskEntity(item))
+
   }
 
   async updateTask(taskId: string, updates: TaskEntity): Promise<TaskEntity|null> {
     const updatedTask = await TaskModel.findByIdAndUpdate(taskId, updates, { new: true });
     if (!updatedTask) return null
-    return updatedTask;
+    return returnTaskEntity(updatedTask);
   }
 
   async deleteTask(taskId: string): Promise<void> {

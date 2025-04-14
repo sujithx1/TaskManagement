@@ -11,7 +11,7 @@ export interface Jwtuser extends JwtPayload{
 }
 
 export const generateAccessToken = (id:string,role:string): string => {
-  return jwt.sign({id,role}, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+  return jwt.sign({id,role}, ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
 };
 
 export const generateRefreshToken = (id:string,role:string): string => {

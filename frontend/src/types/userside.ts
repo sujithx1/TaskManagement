@@ -43,3 +43,8 @@ export interface UserSignUpTypes {
     type: 'success' | 'error' | 'info' | 'warning'|'idel';
    
   }
+
+  export interface TaskNoty{
+    assignUser:string[],
+    task:Tasks_Statetypes
+  }

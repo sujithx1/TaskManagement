@@ -47,7 +47,33 @@ const adminslice=createSlice({
             if (index !== -1) {
               state.tasks[index] = newTask;
             }
+          },removeTask:(state,action)=>{
+            const index=state.tasks.findIndex((item)=>item.id==action.payload)
+            console.log(index);
+            
+            if(index!==-1){
+              console.log("index !==-1");
+              
+              state.tasks.splice(index,1)
+            }
+
+
+          },
+          removeUserfromTask: (state, action) => {
+            const taskIndex = state.tasks.findIndex(item => item.id === action.payload.taskId);
+          
+            if (taskIndex !== -1) {
+              state.tasks[taskIndex].assignedTo = state.tasks[taskIndex].assignedTo.filter(user => {
+                if (typeof user.userId === 'object' && user.userId !== null && '_id' in user.userId) {
+                  return user.userId._id !== action.payload.userId;
+                } else if (typeof user.userId === 'string') {
+                  return user.userId !== action.payload.userId;
+                }
+                return true;
+              });
+            }
           }
+          
           
     },
     extraReducers(builder) {
@@ -67,5 +93,5 @@ const adminslice=createSlice({
 
 
 
-export const{loginSuccess_admin,logout_admin,add_Tasks,setTask}=adminslice.actions
+export const{loginSuccess_admin,logout_admin,add_Tasks,setTask,removeTask,removeUserfromTask}=adminslice.actions
 export default adminslice.reducer

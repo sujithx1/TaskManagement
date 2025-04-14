@@ -62,7 +62,7 @@ export class Usercontroller {
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .status(200)
-        .json({ message: "User logged", user: rest, accessToken });
+        .json({ message: "User logged", user: rest, token:accessToken });
     } catch (err) {
       next(err);
     }
