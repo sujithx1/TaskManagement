@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
     "esModuleInterop": true,
-    "types": ["node"],
-    "resolveJsonModule": true
-  },
-  "include": ["src"]
+    "moduleResolution": "node",
+    "types": ["node"]
+  }
 }
