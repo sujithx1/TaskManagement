@@ -1,0 +1,11 @@
+
+
+[build]
+  command = "npm run build"  # This tells Netlify to run the build script from package.json
+  publish = "dist"           # This is the directory that Netlify will deploy (where Vite's build output goes)
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+  force = true
