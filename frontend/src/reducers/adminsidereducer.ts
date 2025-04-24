@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getStoredAdmin } from "../configs/getadminloacl";
-import { AdminInitialStatetypes } from "../types/adminside";
+import { AdminInitialStatetypes, Task_completeByUser } from "../types/adminside";
 import { getAllTask } from "../routes/admin/adminapicalls";
 
 
@@ -72,7 +72,19 @@ const adminslice=createSlice({
                 return true;
               });
             }
+          },
+          UpdateTask:(state,action:PayloadAction<Task_completeByUser>)=>{
+            const newTask=action.payload.task
+            const findIndex=state.tasks.findIndex((item)=>item.id==newTask.id)
+            console.log(findIndex);
+            
+            if(findIndex!==-1){
+              state.tasks[findIndex]=newTask
+              
+            }
+
           }
+      
           
           
     },
@@ -93,5 +105,5 @@ const adminslice=createSlice({
 
 
 
-export const{loginSuccess_admin,logout_admin,add_Tasks,setTask,removeTask,removeUserfromTask}=adminslice.actions
+export const{loginSuccess_admin,logout_admin,add_Tasks,setTask,removeTask,removeUserfromTask,UpdateTask}=adminslice.actions
 export default adminslice.reducer

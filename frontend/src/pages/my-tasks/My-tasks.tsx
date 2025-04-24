@@ -1,14 +1,17 @@
 import React from 'react';
-import { Tasks_Statetypes } from '../../types/adminside';
-import { AppDispatch } from '../../store/store';
-import { useDispatch } from 'react-redux';
+import { Task_completeByUser, Tasks_Statetypes } from '../../types/adminside';
+import { AppDispatch, RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeStatusUser } from '../../routes/user/userapicalls';
+import { socket } from '../../configs/socket';
 
 interface TaskCardProps {
   task: Tasks_Statetypes;
+  onStatusChange: () => void;
 }
 
-const UserTaskCard: React.FC<TaskCardProps> = ({ task }) => {
+const UserTaskCard: React.FC<TaskCardProps> = ({ task ,onStatusChange}) => {
+  const{user}=useSelector((state:RootState)=>state.user)
   const { title, description, dueDate, priority, status, assignedTo, checklist } = task;
 const dispatch:AppDispatch=useDispatch()
   const taskDone = checklist.length; // assuming checklist completion = checklist length
@@ -29,7 +32,22 @@ const dispatch:AppDispatch=useDispatch()
 
   const handleStatusUpdate = async (userId: string , taskId: string) => {
     
-    dispatch(changeStatusUser({userId,taskId,status:"Completed"}))
+    dispatch(changeStatusUser({userId,taskId,status:"Completed"})).unwrap()
+    .then((res)=>{
+      console.log("response",res);
+      
+      const data:Task_completeByUser={
+        task:res,
+        user:{
+          userId,
+          name:user?.name||""
+        }
+
+      }
+      socket.emit('userTaskcomplete',data)
+      onStatusChange()
+
+    }) 
   
   
   };

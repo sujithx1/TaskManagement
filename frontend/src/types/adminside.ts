@@ -27,6 +27,14 @@ export interface Tasks_Statetypes{
         
      
 }
+
+export interface Task_completeByUser{
+  task:Tasks_Statetypes
+  user:{
+    userId:string,
+    name:string
+  }
+}
 export interface TaskInput {
     title: string;
     description: string;

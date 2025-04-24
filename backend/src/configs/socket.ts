@@ -20,6 +20,9 @@ export const Socketconnection=()=>{
         socket.on('remove-user',({userId,taskId})=>{
             io.emit('removed-user',{userId,taskId})
         })
+        socket.on('userTaskcomplete',(data)=>{
+          io.emit('task-updated-admin',data)
+        })
       })
 
     }
