@@ -72,7 +72,7 @@ const [loading,setloading]=useState(false)
       setTimeout(() => {
 
         setloading(false)
-        navigate('/')
+        navigate('/home')
 
         
       }, 1000);

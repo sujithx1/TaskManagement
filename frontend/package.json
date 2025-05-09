@@ -13,6 +13,8 @@
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.5",
+    "framer-motion": "^12.10.5",
+    "lucide-react": "^0.509.0",
     "notyf": "^3.10.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -14,6 +14,7 @@ import { Notyf } from "notyf";
 
 import "notyf/notyf.min.css";
 import { addTask_user, removeTask } from "../reducers/usersidereducer";
+import LandingPage from "../components/Landingpage";
 
 // Create an instance
 const notyf = new Notyf();
@@ -72,12 +73,16 @@ const Userroutes = () => {
     <>
       <Routes>
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
-          <Route path="/" element={<UserDashboard />} />
+
+      
+          <Route path="/home" element={<UserDashboard />} />
           <Route path="/my-tasks/:id" element={<TaskList />} />
         </Route>
-
+        
+        <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
