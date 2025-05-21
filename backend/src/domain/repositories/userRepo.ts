@@ -1,3 +1,4 @@
+import { UserResponseDto } from "../../dto/userDto";
 import { userEntity } from "../entities/userentity";
 
 export interface IuserRepo{

@@ -1,5 +1,7 @@
 import { TaskEntity, TaskInput } from "../../../domain/entities/taskentity";
 import { IAdminRepositories } from "../../../domain/repositories/adminrepositories";
+import { TaskMap } from "../../../dto/mapper/taskMap";
+import { TaskresponseDto } from "../../../dto/task.Dto";
 
 
     
@@ -11,8 +13,9 @@ export class CreateTask_useCase {
         
     }
 
-    async execute(data:TaskInput):Promise<TaskEntity>{
+    async execute(data:TaskInput):Promise<TaskresponseDto>{
         const task=await this.adminrep.createTask(data)
-        return task
+        return TaskMap.toResponse(task)
     }
+    
 }

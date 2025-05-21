@@ -40,6 +40,8 @@ export const loginUser = createAsyncThunk<UserStateTypes,UserLogin_types,{reject
           localStorage.setItem('user-token',response.data.token)
 
         }
+        console.log(response.data.user);
+        
         return response.data.user;
 
       } catch (error) {

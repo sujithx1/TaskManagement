@@ -4,8 +4,10 @@ export interface userEntity{
     email:string;
     phone:string;
     password:string
-    prifile_image:string
     isBlock?:boolean;
     isAdmin?:boolean;
+    createdAt?:Date;
+    updatedAt?:Date
+
 
 }

@@ -1,5 +1,7 @@
 import { userEntity } from "../../../domain/entities/userentity";
 import { IAdminRepositories } from "../../../domain/repositories/adminrepositories";
+import { UserMap } from "../../../dto/mapper/userMap";
+import { UserResponseDto } from "../../../dto/userDto";
 
 export class Getusers_useCase{
     constructor(
@@ -8,10 +10,10 @@ export class Getusers_useCase{
         
     }
 
-    async execute():Promise<userEntity[]>{
+    async execute():Promise<UserResponseDto[]>{
         const users=await this.adminrep.getAllUsers()
         
-        return users
+        return users.map((item)=>UserMap.toResponse(item))
 
 
     }

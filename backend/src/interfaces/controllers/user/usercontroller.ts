@@ -33,9 +33,9 @@ export class Usercontroller {
         password,
         phone
       );
-      const { password: _, ...rest } = user;
+     
 
-      res.status(201).json({ message: "User created", user: rest });
+      res.status(201).json({ message: "User created", user });
     } catch (err) {
       next(err);
     }
@@ -51,8 +51,8 @@ export class Usercontroller {
       const accessToken = generateAccessToken(user.id, role);
       const refreshToken = generateRefreshToken(user.id, role);
 
-      const { password: _, ...rest } = user;
-      console.log("user", rest);
+      console.log(user)
+      
 
       res
         .cookie(`${role}_refreshToken`, refreshToken, {
@@ -62,7 +62,7 @@ export class Usercontroller {
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .status(200)
-        .json({ message: "User logged", user: rest, token:accessToken });
+        .json({ message: "User logged", user, token:accessToken });
     } catch (err) {
       next(err);
     }
@@ -100,10 +100,9 @@ export class Usercontroller {
         id,
         name,
         phone,
-        prifile_image
+        
       );
-      const { password: _, ...rest } = user;
-      return res.status(200).json({ message: "success", user: rest });
+      return res.status(200).json({ message: "success", user});
     } catch (err) {
       return next(err);
     }

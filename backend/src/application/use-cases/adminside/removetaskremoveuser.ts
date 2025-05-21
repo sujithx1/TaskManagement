@@ -3,6 +3,8 @@ import { ErrorCodes } from "../../../configs/errorcodes";
 import { TaskEntity } from "../../../domain/entities/taskentity";
 import { IAdminRepositories } from "../../../domain/repositories/adminrepositories";
 import { ItaskRepositories } from "../../../domain/repositories/taskrepo";
+import { TaskMap } from "../../../dto/mapper/taskMap";
+import { TaskresponseDto } from "../../../dto/task.Dto";
 
 
 export class RemoveUserTask_useCase{
@@ -13,7 +15,7 @@ export class RemoveUserTask_useCase{
         
     }
 
-    async execute(taskId:string,userId:string):Promise<TaskEntity|null>
+    async execute(taskId:string,userId:string):Promise<TaskresponseDto|null>
     {
         const task=await this.taskrepo.findById(taskId)
         if(!task) throw new AppError(ErrorCodes.Resourse_not_found,400)
@@ -31,7 +33,7 @@ export class RemoveUserTask_useCase{
 
     const update=await this.admintaskrepo.updateTask(taskId,task)
     if(!update)throw new AppError(ErrorCodes.Server_errors,500)
-    return update
+    return TaskMap.toResponse(update)
 
   
     }

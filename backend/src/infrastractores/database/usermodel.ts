@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 
 
 
-interface Iuser extends Document {
+export interface Iuser extends Document {
     id:string;
     name:string;
     email:string;
@@ -10,7 +10,7 @@ interface Iuser extends Document {
     password:string;
     prifile_image:string;
     isBlock:boolean;
-    isAdmin:boolean;
+    isAdmin:boolean; 
     createdAt:Date
     updatedAt:Date
 }
